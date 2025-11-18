@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pitch Deck - Dr. Store Monetização</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #2C3E50;
+      --accent: #40E0D0;
+      --gold: #D4AF37;
+      --red: #e74c3c;
+      --green: #00a86b;
+      --bg: #1a1a1a;
+      --card: #FFFFFF;
+      --text: #2C3E50;
+      --text-light: #5A6C7D;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    .slides-container {
+      width: 100vw;
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    
+    .slide {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      scroll-snap-align: start;
+      padding: 60px 40px;
+      position: relative;
+    }
+    
+    .slide-content {
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .slide-cover {
+      background: linear-gradient(135deg, var(--primary) 0%, #1a2634 100%);
+      text-align: center;
+    }
+    
+    .slide-dark {
+      background: linear-gradient(135deg, #1a2634 0%, #2C3E50 100%);
+    }
+    
+    .slide-light {
+      background: #f8f7f5;
+      color: var(--text);
+    }
+    
+    .slide-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #2dd4bf 100%);
+      color: var(--primary);
+    }
+    
+    .slide-gold {
+      background: linear-gradient(135deg, #D4AF37 0%, #F4C430 100%);
+      color: var(--primary);
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 32px;
+      line-height: 1.2;
+    }
+    
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+    
+    .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    
+    .large-text {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      opacity: 0.95;
+    }
+    
+    .slide-number {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      font-size: 0.9rem;
+      opacity: 0.5;
+      font-weight: 600;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      margin: 48px 0;
+    }
+    
+    .stat-box {
+      text-align: center;
+      padding: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .stat-number {
+      font-size: 4rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .problem-box, .solution-box {
+      padding: 40px;
+      border-radius: 16px;
+      margin: 24px 0;
+      border-left: 6px solid;
+    }
+    
+    .problem-box {
+      background: rgba(231,76,60,0.15);
+      border-color: var(--red);
+    }
+    
+    .solution-box {
+      background: rgba(64,224,208,0.15);
+      border-color: var(--accent);
+    }
+    
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin: 48px 0;
+    }
+    
+    .comparison-card {
+      padding: 40px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .comparison-card.no-ppv {
+      background: rgba(44,62,80,0.9);
+      border: 3px solid var(--primary);
+    }
+    
+    .comparison-card.with-ppv {
+      background: rgba(212,175,55,0.9);
+      border: 3px solid var(--gold);
+    }
+    
+    .comparison-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--gold);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    
+    .comparison-title {
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+    
+    .comparison-revenue {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 24px 0;
+      color: var(--gold);
+    }
+    
+    .comparison-list {
+      list-style: none;
+      margin: 24px 0;
+    }
+    
+    .comparison-list li {
+      padding: 12px 0;
+      font-size: 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .comparison-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .timeline {
+      margin: 48px 0;
+    }
+    
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+      padding: 24px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .timeline-period {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    
+    .timeline-desc {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .highlight-box {
+      background: rgba(212,175,55,0.2);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 40px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    
+    .highlight-number {
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 24px 0;
+    }
+    
+    .pricing-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin: 48px 0;
+    }
+    
+    .pricing-card {
+      padding: 48px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+    
+    .pricing-card.recommended {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.15);
+      transform: scale(1.05);
+    }
+    
+    .pricing-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--primary);
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    
+    .pricing-title {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    .pricing-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      margin: 24px 0;
+    }
+    
+    .pricing-details {
+      list-style: none;
+      margin-top: 24px;
+    }
+    
+    .pricing-details li {
+      padding: 12px 0;
+      padding-left: 32px;
+      position: relative;
+      font-size: 1.05rem;
+    }
+    
+    .pricing-details li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--primary);
+      padding: 20px 60px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      margin-top: 32px;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(212,175,55,0.4);
+    }
+    
+    .nav-dots {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+    
+    .icon-large {
+      font-size: 5rem;
+      margin-bottom: 24px;
+      display: block;
+    }
+    
+    .check-list {
+      list-style: none;
+      margin: 32px 0;
+    }
+    
+    .check-list li {
+      padding: 16px 0;
+      padding-left: 48px;
+      position: relative;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    
+    .check-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    
+    @media (max-width: 968px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 2rem; }
+      .subtitle { font-size: 1.2rem; }
+      .large-text { font-size: 1.1rem; }
+      
+      .two-columns,
+      .comparison-grid,
+      .pricing-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+      
+      .slide {
+        padding: 40px 20px;
+      }
+      
+      .nav-dots {
+        display: none;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-number { font-size: 3rem; }
+      .highlight-number { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+    
+    <!-- SLIDE 1: COVER -->
+    <div class="slide slide-cover">
+      <div class="slide-content">
+        <span class="icon-large">💰</span>
+        <h1>Proposta de Monetização<br>Dr. Store</h1>
+        <p class="subtitle">Transformando 5.000+ vídeos em receita passiva</p>
+        <p class="large-text" style="margin-top: 32px; opacity: 0.8;">Petrus Barros | 2024</p>
+      </div>
+      <div class="slide-number">1 / 12</div>
+    </div>
+
+    <!-- SLIDE 2: THE SITUATION -->
+    <div class="slide slide-dark">
+      <div class="slide-content">
+        <h2>📊 A Situação Atual</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-number">23K+</span>
+            <span class="stat-label">Seguidores em redes sociais</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">5.000+</span>
+            <span class="stat-label">Vídeos já produzidos</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">R$ 0</span>
+            <span class="stat-label">Receita recorrente atual</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">4+ anos</span>
+            <span class="stat-label">De conteúdo disponível</span>
+          </div>
+        </div>
+        <div class="problem-box">
+          <p class="large-text">Você tem um <strong>arsenal gigante</strong> de conteúdo de qualidade e uma audiência engajada, mas isso <strong>não está gerando receita proporcional</strong>.</p>
+        </div>
+      </div>
+      <div class="slide-number">2 / 12</div>
+    </div>
+
+    <!-- SLIDE 3: THE OPPORTUNITY -->
+    <div class="slide slide-accent">
+      <div class="slide-content">
+        <h2>🎯 A Oportunidade</h2>
+        <div class="highlight-box" style="background: rgba(255,255,255,0.9); border-color: var(--primary);">
+          <p class="large-text" style="color: var(--primary); margin-bottom: 16px;">Conversão conservadora de apenas 1,5% da sua audiência:</p>
+          <div class="highlight-number" style="color: var(--primary);">~350 assinantes</div>
+          <p class="large-text" style="color: var(--primary); margin-top: 16px;">Pagando R$ 35/mês cada</p>
+        </div>
+        <div class="solution-box" style="background: rgba(255,255,255,0.95); color: var(--primary);">
+          <h3 style="color: var(--primary);">Resultado:</h3>
+          <p class="large-text" style="color: var(--primary);"><strong>R$ 10.000 - R$ 11.000 por mês</strong><br>
+          Com conteúdo que você <strong>já tem pronto</strong></p>
+        </div>
+      </div>
+      <div class="slide-number" style="color: var(--primary);">3 / 12</div>
+    </div>
+
+    <!-- SLIDE 4: THE QUESTION -->
+    <div class="slide slide-gold">
+      <div class="slide-content" style="text-align: center;">
+        <span class="icon-large">🤔</span>
+        <h2>A Grande Questão</h2>
+        <div class="highlight-box" style="background: rgba(44,62,80,0.1); border-color: var(--primary); margin: 64px auto; max-width: 900px;">
+          <p style="font-size: 2rem; line-height: 1.6; font-weight: 600;">
+            "Devo adicionar PPV para maximizar receita ou focar em modelo simples sem trabalho adicional?"
+          </p>
+        </div>
+        <p class="large-text" style="opacity: 0.8;">Vamos comparar os dois cenários lado a lado.</p>
+      </div>
+      <div class="slide-number" style="color: var(--primary);">4 / 12</div>
+    </div>
+
+    <!-- SLIDE 5: COMPARISON -->
+    <div class="slide slide-dark">
+      <div class="slide-content">
+        <h2 style="text-align: center; margin-bottom: 48px;">⚖️ Comparação: No PPV vs Com PPV</h2>
+        <div class="comparison-grid">
+          <!-- NO PPV -->
+          <div class="comparison-card no-ppv">
+            <div class="comparison-badge">SIMPLES</div>
+            <h3 class="comparison-title">📦 Modelo No PPV</h3>
+            <p style="opacity: 0.9; margin-bottom: 24px;">Assinatura com tudo incluído</p>
+            
+            <div class="comparison-revenue">R$ 10.600/mês</div>
+            
+            <ul class="comparison-list">
+              <li>✅ Preço: R$ 35/mês</li>
+              <li>✅ Todo conteúdo incluído</li>
+              <li>✅ 7-10 posts por semana</li>
+              <li>✅ Seu custo: R$ 3.620/mês</li>
+              <li>✅ Seu lucro: R$ 6.980/mês</li>
+            </ul>
+            
+            <div style="margin-top: 32px; padding: 20px; background: rgba(0,168,107,0.2); border-radius: 12px; text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: 700; color: var(--gold);">0 horas</div>
+              <div style="opacity: 0.9; margin-top: 8px;">do seu tempo adicional</div>
+            </div>
+          </div>
+
+          <!-- WITH PPV -->
+          <div class="comparison-card with-ppv">
+            <div class="comparison-badge" style="background: var(--primary); color: var(--gold);">MAXIMIZADO</div>
+            <h3 class="comparison-title">💰 Modelo Com PPV</h3>
+            <p style="opacity: 0.9; margin-bottom: 24px;">Base + conteúdo premium</p>
+            
+            <div class="comparison-revenue">R$ 13.200/mês</div>
+            
+            <ul class="comparison-list">
+              <li>💎 Base: R$ 20/mês</li>
+              <li>💎 PPV: +R$ 2.600 extra</li>
+              <li>💎 Seu custo: R$ 5.140/mês</li>
+              <li>💎 Seu lucro: R$ 8.060/mês</li>
+              <li>💎 +R$ 1.080 vs sem PPV</li>
+            </ul>
+            
+            <div style="margin-top: 32px; padding: 20px; background: rgba(231,76,60,0.2); border-radius: 12px; text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: 700; color: var(--gold);">20h/mês</div>
+              <div style="opacity: 0.9; margin-top: 8px;">curadoria + teasers + otimização</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">5 / 12</div>
+    </div>
+
+    <!-- SLIDE 6: THE MATH -->
+    <div class="slide slide-light">
+      <div class="slide-content">
+        <h2 style="color: var(--primary);">🧮 A Matemática do PPV</h2>
+        
+        <div class="two-columns">
+          <div>
+            <h3 style="color: var(--primary);">Receita Adicional</h3>
+            <div style="background: rgba(212,175,55,0.1); padding: 32px; border-radius: 12px; margin-top: 24px;">
+              <p style="color: var(--text); font-size: 1.2rem; line-height: 2;">
+                <strong style="color: var(--gold);">+R$ 2.600/mês</strong> de receita bruta extra<br><br>
+                <strong>Seu custo extra:</strong> R$ 1.520/mês<br><br>
+                <strong>Seu lucro extra:</strong> R$ 1.080/mês<br><br>
+                <strong>ROI para você:</strong> +15% de lucro líquido
+              </p>
+            </div>
+          </div>
+          
+          <div>
+            <h3 style="color: var(--primary);">O que eu faço</h3>
+            <ul class="check-list" style="color: var(--text);">
+              <li>Selecionar vídeos premium do acervo</li>
+              <li>Criar previews de 15-30 segundos</li>
+              <li>Escrever mensagens de venda</li>
+              <li>Analisar performance semanal</li>
+              <li>Ajustar preços e timing</li>
+            </ul>
+            <p style="color: var(--text-light); margin-top: 24px; font-style: italic;">
+              Tudo do material já existente - sem produção nova
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number" style="color: var(--text-light);">6 / 12</div>
+    </div>
+
+    <!-- SLIDE 7: YOUR WORKLOAD -->
+    <div class="slide slide-dark">
+      <div class="slide-content">
+        <h2>⏱️ Minha Carga de Trabalho (PPV)</h2>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-period">Segunda<br>1-2h</div>
+            <div class="timeline-desc">
+              <strong>Curadoria semanal:</strong> Escolher 8-10 vídeos premium do acervo. Criar previews de 15 segundos no editor.
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-period">Quarta<br>1-2h</div>
+            <div class="timeline-desc">
+              <strong>Agendamento PPV:</strong> Escrever 3-4 mensagens de venda. Agendar envios para horários de pico.
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-period">Sexta<br>1-2h</div>
+            <div class="timeline-desc">
+              <strong>Análise & Ajustes:</strong> Ver quais venderam bem. Ajustar preços. Planejar próxima semana.
+            </div>
+          </div>
+        </div>
+        
+        <div class="highlight-box">
+          <p class="large-text">Total: <strong>20 horas por mês</strong></p>
+          <p style="margin-top: 16px; opacity: 0.8;">Meu ROI: R$ 76/hora | Sem produção nova</p>
+        </div>
+      </div>
+      <div class="slide-number">7 / 12</div>
+    </div>
+
+    <!-- SLIDE 8: THE DECISION FRAMEWORK -->
+    <div class="slide slide-accent">
+      <div class="slide-content">
+        <h2 style="color: var(--primary);">🎯 Framework de Decisão</h2>
+        
+        <div style="background: rgba(255,255,255,0.95); padding: 48px; border-radius: 16px; color: var(--primary); margin-top: 40px;">
+          <h3 style="margin-bottom: 32px; text-align: center;">Escolha <strong>No PPV</strong> se:</h3>
+          <ul class="check-list" style="color: var(--primary);">
+            <li>Você quer <strong>R$ 6.980/mês líquido</strong> sem complexidade</li>
+            <li>Prefere <strong>simplicidade</strong> total</li>
+            <li>Custo fixo e previsível de <strong>R$ 3.620/mês</strong></li>
+            <li>Sistema que rode <strong>sozinho por 4+ anos</strong></li>
+          </ul>
+          
+          <h3 style="margin: 48px 0 32px; text-align: center;">Adicione <strong>PPV</strong> se:</h3>
+          <ul class="check-list" style="color: var(--primary);">
+            <li>Você quer <strong>+R$ 1.080/mês</strong> de lucro extra</li>
+            <li>Aceita investir <strong>+R$ 1.520/mês</strong> para ganhar mais</li>
+            <li>Quer <strong>maximizar receita</strong> (+25%)</li>
+            <li>Win-win: você ganha mais, eu trabalho mais</li>
+          </ul>
+        </div>
+      </div>
+      <div class="slide-number" style="color: var(--primary);">8 / 12</div>
+    </div>
+
+    <!-- SLIDE 9: RECOMMENDED STRATEGY -->
+    <div class="slide slide-gold">
+      <div class="slide-content">
+        <span class="icon-large">💡</span>
+        <h2>Estratégia Recomendada</h2>
+        
+        <div style="background: rgba(44,62,80,0.9); padding: 48px; border-radius: 16px; color: white; margin-top: 40px;">
+          <h3 style="color: var(--gold); margin-bottom: 24px; font-size: 2.2rem;">Abordagem Híbrida Escalonada</h3>
+          
+          <div style="background: rgba(255,255,255,0.1); padding: 32px; border-radius: 12px; margin: 32px 0;">
+            <p style="font-size: 1.3rem; line-height: 1.8;">
+              <strong style="color: var(--gold);">Meses 1-3:</strong> Comece com <strong>No PPV</strong>
+            </p>
+            <p style="margin-top: 16px; opacity: 0.9; font-size: 1.1rem;">
+              Valide o mercado, construa base sólida. Custo: R$ 3.620/mês. Lucro: R$ 6.980/mês.
+            </p>
+          </div>
+          
+          <div style="background: rgba(212,175,55,0.2); padding: 32px; border-radius: 12px; margin: 32px 0;">
+            <p style="font-size: 1.3rem; line-height: 1.8;">
+              <strong style="color: var(--gold);">Meses 4-6:</strong> Adicione <strong>PPV gradualmente</strong>
+            </p>
+            <p style="margin-top: 16px; opacity: 0.9; font-size: 1.1rem;">
+              Com dados reais. Custo: R$ 5.140/mês. Lucro: R$ 8.060/mês (+R$ 1.080).
+            </p>
+          </div>
+          
+          <div style="text-align: center; margin-top: 48px; padding-top: 32px; border-top: 2px solid rgba(255,255,255,0.2);">
+            <p style="font-size: 1.4rem; color: var(--gold);">
+              <strong>O melhor dos dois mundos:</strong> Começa simples, escala quando fizer sentido
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number" style="color: var(--primary);">9 / 12</div>
+    </div>
+
+    <!-- SLIDE 10: INVESTMENT -->
+    <div class="slide slide-dark">
+      <div class="slide-content">
+        <h2 style="text-align: center;">💵 Investimento & Modelo</h2>
+        
+        <div class="pricing-container">
+          <div class="pricing-card recommended">
+            <div class="pricing-badge">RECOMENDADO - BASE</div>
+            <h3 class="pricing-title">Modelo No PPV</h3>
+            <div class="pricing-value">R$ 1.500 + 20%</div>
+            <ul class="pricing-details">
+              <li>R$ 1.500/mês fixo</li>
+              <li>+ 20% sobre faturamento</li>
+              <li>Total: R$ 3.620/mês para você</li>
+              <li>Seu lucro: R$ 6.980/mês</li>
+              <li>Gestão completa + curadoria</li>
+              <li>Sistema 100% automatizado</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-badge" style="background: var(--accent); color: var(--primary);">PREMIUM - PPV</div>
+            <h3 class="pricing-title">Modelo Com PPV</h3>
+            <div class="pricing-value">R$ 1.500 + 20% + R$ 1.000</div>
+            <ul class="pricing-details">
+              <li>R$ 1.500/mês fixo base</li>
+              <li>+ 20% sobre faturamento</li>
+              <li>+ R$ 1.000 bônus PPV</li>
+              <li>Total: R$ 5.140/mês para você</li>
+              <li>Seu lucro: R$ 8.060/mês</li>
+              <li>20h/mês de trabalho PPV adicional</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="highlight-box">
+          <p class="large-text">Diferença PPV: Você investe +R$ 1.520/mês e ganha +R$ 1.080/mês de lucro líquido</p>
+          <p style="margin-top: 16px; opacity: 0.8; font-size: 1.1rem;">Win-win: você maximiza receita, eu sou compensado pelo trabalho extra</p>
+        </div>
+      </div>
+      <div class="slide-number">10 / 12</div>
+    </div>
+
+    <!-- SLIDE 11: TIMELINE -->
+    <div class="slide slide-light">
+      <div class="slide-content">
+        <h2 style="color: var(--primary);">📅 Cronograma de Implementação</h2>
+        
+        <div class="timeline">
+          <div class="timeline-item" style="border-color: var(--accent); background: rgba(64,224,208,0.1);">
+            <div class="timeline-period" style="color: var(--primary);">Semana 1</div>
+            <div class="timeline-desc" style="color: var(--text);">
+              <strong style="color: var(--primary);">Setup + Curadoria Intensiva</strong><br>
+              Análise de 500-800 vídeos top performers. Setup OnlyFans/Privacy. Criação do sistema de categorização. Calendário de 90 dias pronto.
+            </div>
+          </div>
+          
+          <div class="timeline-item" style="border-color: var(--accent); background: rgba(64,224,208,0.1);">
+            <div class="timeline-period" style="color: var(--primary);">Sem 2-4</div>
+            <div class="timeline-desc" style="color: var(--text);">
+              <strong style="color: var(--primary);">Lançamento Modelo No PPV</strong><br>
+              50-70 vídeos no OnlyFans. Funil no Twitter/Instagram (5-7 posts/semana). Testes A/B. Você não faz nada.
+            </div>
+          </div>
+          
+          <div class="timeline-item" style="border-color: var(--accent); background: rgba(64,224,208,0.1);">
+            <div class="timeline-period" style="color: var(--primary);">Mês 2-3</div>
+            <div class="timeline-desc" style="color: var(--text);">
+              <strong style="color: var(--primary);">Consolidação & Validação</strong><br>
+              150-200 vídeos/mês curados. Receita estabilizando em R$ 10-11k. Dados claros de performance. Sistema no piloto automático.
+            </div>
+          </div>
+          
+          <div class="timeline-item" style="border-color: var(--gold); background: rgba(212,175,55,0.1);">
+            <div class="timeline-period" style="color: var(--primary);">Mês 4-6</div>
+            <div class="timeline-desc" style="color: var(--text);">
+              <strong style="color: var(--primary);">Decisão: Adicionar PPV? (opcional)</strong><br>
+              Com dados reais, decidimos juntos se vale adicionar PPV. Se sim: custo +R$ 1.520/mês, lucro +R$ 1.080/mês. Se não: continuamos modelo simples.
+            </div>
+          </div>
+          
+          <div class="timeline-item" style="border-color: var(--accent); background: rgba(64,224,208,0.1);">
+            <div class="timeline-period" style="color: var(--primary);">Mês 7-12+</div>
+            <div class="timeline-desc" style="color: var(--text);">
+              <strong style="color: var(--primary);">Operação de Longo Prazo</strong><br>
+              Sistema consolidado. 200-300 vídeos/mês. Ainda restam 3.000+ vídeos no acervo. Sustentável por 4+ anos.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number" style="color: var(--text-light);">11 / 12</div>
+    </div>
+
+    <!-- SLIDE 12: FINAL CTA -->
+    <div class="slide slide-cover">
+      <div class="slide-content" style="text-align: center;">
+        <span class="icon-large">🚀</span>
+        <h1 style="font-size: 3.5rem;">Vamos Começar?</h1>
+        
+        <div class="highlight-box" style="margin: 48px auto; max-width: 800px;">
+          <p style="font-size: 1.5rem; line-height: 1.8; margin-bottom: 24px;">
+            Você fornece o acesso ao material.<br>
+            Eu transformo em <strong style="color: var(--gold);">R$ 6.980 - R$ 8.060/mês</strong> de lucro líquido.
+          </p>
+          <p style="font-size: 1.2rem; opacity: 0.9;">
+            Sem produção nova. Sem burnout. Sistema escalável e sustentável.
+          </p>
+          
+          <div style="margin-top: 32px; padding: 24px; background: rgba(255,255,255,0.1); border-radius: 12px;">
+            <p style="font-size: 1.1rem; line-height: 1.6;">
+              <strong>Modelo Base:</strong> R$ 3.620/mês | Lucro: R$ 6.980/mês<br>
+              <strong>Modelo Premium (PPV):</strong> R$ 5.140/mês | Lucro: R$ 8.060/mês
+            </p>
+          </div>
+        </div>
+        
+        <a href="https://wa.me/5511978495374?text=Ol%C3%A1%20Petrus%2C%20vi%20o%20pitch%20deck%20e%20quero%20conversar%20sobre%20a%20monetiza%C3%A7%C3%A3o" class="cta-button">
+          Aceitar Proposta
+        </a>
+        
+        <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.2);">
+          <p style="opacity: 0.7; font-size: 1rem;">
+            Proposta válida por 7 dias • Petrus Barros
+          </p>
+        </div>
+      </div>
+      <div class="slide-number">12 / 12</div>
+    </div>
+
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="nav-dots">
+    <div class="nav-dot active" onclick="scrollToSlide(0)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(1)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(3)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(5)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(6)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(7)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(8)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(9)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(10)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(11)"></div>
+  </div>
+
+  <script>
+    function scrollToSlide(index) {
+      const slides = document.querySelectorAll('.slide');
+      slides[index].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const container = document.querySelector('.slides-container');
+    const dots = document.querySelectorAll('.nav-dot');
+    const slides = document.querySelectorAll('.slide');
+
+    container.addEventListener('scroll', () => {
+      const scrollPosition = container.scrollTop;
+      const windowHeight = window.innerHeight;
+      
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        const slideBottom = slideTop + slide.offsetHeight;
+        
+        if (scrollPosition >= slideTop - windowHeight / 2 && scrollPosition < slideBottom - windowHeight / 2) {
+          dots.forEach(dot => dot.classList.remove('active'));
+          dots[index].classList.add('active');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const currentScroll = container.scrollTop;
+      const windowHeight = window.innerHeight;
+      
+      if (e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        container.scrollBy({ top: windowHeight, behavior: 'smooth' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        container.scrollBy({ top: -windowHeight, behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>
